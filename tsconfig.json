@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "src/*": ["src/*"],
+      "test/*": ["test/*"]
+    },
+    "target": "es2016",
+    "lib": ["ES6"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "outDir": "build"
+  },
+  "include": ["src", "test"]
+}
