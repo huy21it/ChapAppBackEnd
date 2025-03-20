@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # Lệnh để chạy ứng dụng khi container khởi động
-CMD ["yarn start", "index.js"]
+CMD ["yarn", "start"]
