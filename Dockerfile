@@ -1,20 +1,19 @@
-# Sử dụng image Node.js chính thức từ Docker Hub
-FROM node:20
+FROM node:20-alpine AS build
 
-# Thiết lập thư mục làm việc trong container
+# set working directory
 WORKDIR /app
 
-# Sao chép file package.json và package-lock.json (nếu có) vào container
-COPY package*.json ./
+# copy package.json and package-lock.json
+COPY package*.json yarn.lock ./
 
-# Cài đặt các dependencies
-RUN yarn
+# install dependencies
+RUN yarn install --frozen-lockfile && yarn cache clean
 
-# Sao chép toàn bộ mã nguồn vào container
+# copy source code
 COPY . .
 
-# Expose cổng mà ứng dụng của bạn sẽ chạy (ví dụ: 3000)
+# expose port 8080
 EXPOSE 8000
 
-# Lệnh để chạy ứng dụng khi container khởi động
-CMD ["yarn", "start"]
+# start app
+CMD ["yarn", "run", "start"]

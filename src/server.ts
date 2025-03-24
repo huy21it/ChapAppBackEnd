@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { MainRoutes } from './routes';
 import { HttpException } from './shares/http-exception';
 import passport from 'passport';
@@ -55,7 +55,7 @@ AWSConfig.update({
   signatureVersion: 'v4',
 });
 
-const errorHandler = (
+const errorHandler: ErrorRequestHandler = (
   error: any,
   request: Request,
   response: Response,
@@ -70,7 +70,6 @@ const errorHandler = (
       errors: error.errors,
     });
   }
-
   next(error);
 };
 
@@ -78,17 +77,12 @@ passport.use(passportMiddleware);
 app.use(cors());
 app.use(passport.initialize());
 app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/api', MainRoutes);
-app.use(errorHandler);
-
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response): void => {
   res.send('Express + TS server');
 });
+app.use(errorHandler); // Đặt errorHandler sau tất cả các route
 
 export default app;
